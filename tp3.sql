@@ -13,11 +13,16 @@ CONSTRAINT			uk_art_nom		UNIQUE (art_nom)
 
 CREATE TABLE lignecmd
 (
-lig_num				INT(2)			NULL,
-lig_com_num			
-lig_art_code
-lig_qte
-lig_art_prix
+lig_num				INT(2)			NOT NULL,
+lig_com_num			INT(4)			NOT NULL,
+lig_art_code		VARCHAR(4)		NOT NULL,
+lig_qte				INT(3)          NULL,
+lig_art_prix		REAL(9,2)       NULL,
+
+CONSTRAINT			pk_lig_com_num  PRIMARY KEY (lig_num, lig_com_num),
+CONSTRAINT 			fk_lig_com_num  FOREIGN KEY (lig_com_num),
+CONSTRAINT			fk_lig_art_code FOREIGN KEY (lig_art_code)
+);
 
 
 
