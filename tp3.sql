@@ -20,10 +20,33 @@ lig_qte				INT(3)          NULL,
 lig_art_prix		REAL(9,2)       NULL,
 
 CONSTRAINT			pk_lig_com_num  PRIMARY KEY (lig_num, lig_com_num),
-CONSTRAINT 			fk_lig_com_num  FOREIGN KEY (lig_com_num),
-CONSTRAINT			fk_lig_art_code FOREIGN KEY (lig_art_code)
+CONSTRAINT 			fk_lig_com_num  FOREIGN KEY (lig_com_num) REFERENCES commande (com_num),
+CONSTRAINT			fk_lig_art_code FOREIGN KEY (lig_art_code) REFERENCES article (art_code)
 );
 
+CREATE TABLE commande 
+(
+com_num				INT(4) NOT NULL,
+com_date			DATE   NULL,
+com_total 			REAL(9,2) NULL,
+com_rabais    		REAL(9,2) NULL,
+com_cli_num			INT(4) NOT NULL,
+
+CONSTRAINT 			pk_com_num PRIMARY KEY (com_num),
+CONSTRAINT          fk_com_cli_num foreign key (com_cli_num) REFERENCES clientelle (cli_num)
+);
+
+CREATE TABLE clientelle 
+(
+cli_num				INT(4) NOT NULL,
+cli_nom				varchar(15) NULL,
+cli_prenom			varchar(15) NULL,
+cli_solde    		REAL(9,2) NULL,
+cli_ville			varchar(20) NULL,
+
+CONSTRAINT 			pk_cli_num PRIMARY KEY (cli_num)
+);
+ 
 
 
 
