@@ -88,15 +88,39 @@ CREATE TABLE ArticleTemp like article;
 
 INSERT INTO ArticleTemp SELECT * FROM article;
 
-SELECT * FROM ArticleTemp;
 
 
 SELECT art_nom, art_code, format(art_prix * 1.10, 3) AS "PrixPlus10%", art_qte FROM ArticleTemp; 
 
-SELECT * FROM commande WHERE com_date substr
+
+SELECT * FROM COMMANDE WHERE SUBSTR(com_date,1,4) ='2022';
+
+SELECT * 
+FROM ArticleTemp 
+WHERE art_prix = (SELECT MAX(art_prix) FROM ArticleTemp);
+
+ SELECT DISTINCT lig_com_num, SUM(lig_qte) as "NOMBRE D'ARTICLES" FROM LIGNECMD GROUP BY lig_com_num;
+ 
+SELECT lig_com_num, COUNT(*) AS Nombre_de_lignes
+FROM LIGNECMD
+GROUP BY lig_com_num;
+
+SELECT SUBSTR(com_date, 1, 4) AS Annee, SUM(com_total) AS Total_commandes_par_annee
+FROM COMMANDE
+GROUP BY Annee
+ORDER BY Annee DESC;
+
+SELECT DISTINCT substr(com_date, 1, 4) AS "Année", SUM(com_total) AS "Total des commandes" 
+FROM COMMANDE 
+WHERE com_total > 200 
+GROUP BY substr(com_date, 1, 4);
 
 
 
+SELECT SUBSTR(com_date, 1, 4) AS "Année", SUM(com_total) AS "Somme du total des commandes"
+FROM COMMANDE
+WHERE com_total > 200 AND com_rabais IS NOT NULL
+GROUP BY SUBSTR(com_date, 1, 4);
 
 
  
