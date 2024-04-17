@@ -49,6 +49,51 @@ CONSTRAINT 			fk_lig_com_num  FOREIGN KEY (lig_com_num) REFERENCES commande (com
 CONSTRAINT			fk_lig_art_code FOREIGN KEY (lig_art_code) REFERENCES article (art_code)
 );
 
+INSERT INTO CLIENTELLE (cli_num, cli_nom, cli_prenom, cli_solde, cli_ville) 
+VALUES 
+(1010, 'Tremblay', 'Jean', 152.50, 'Québec'),
+(1020, 'Gagnon', 'Julie', 325.00, NULL),
+(1030, 'Bolduc', 'André', 0, 'Thetford Mines'),
+(1040, 'Viger', 'Annie', 25.30, NULL),
+(1050, 'Plamondon', 'Lucie', -1000.00, 'Montréal');
+
+INSERT INTO COMMANDE (com_num, com_date, com_total, com_rabais, com_cli_num) 
+VALUES 
+(1000, STR_TO_DATE('30-05-2023', '%d-%m-%Y'), 230.00, 5, 1010),
+(1001, STR_TO_DATE('12-06-2022', '%d-%m-%Y'), 0.40, 0, 1020),
+(1002, STR_TO_DATE('25-01-2024', '%d-%m-%Y'), 22250.00, 97, 1030),
+(1003, STR_TO_DATE('18-09-2022', '%d-%m-%Y'), 25.00, NULL, 1040),
+(1004, STR_TO_DATE('05-11-2023', '%d-%m-%Y'), 88.50, NULL, 1050);
+
+INSERT INTO ARTICLE (art_code, art_nom, art_prix, art_qte) 
+VALUES 
+('AF10', 'Marteau', 22.50, 50),
+('AB21', 'Clou', 0.10, 50),
+('CF02', 'Planche', 215.00, 300),
+('ED03', 'Tournevis', 25.10, 150),
+('JK04', 'Scie', 22.00, 30);
+
+INSERT INTO LIGNECMD (lig_num, lig_com_num, lig_art_code, lig_qte, lig_art_prix) 
+VALUES 
+(1, 1000, 'AF10', 10, 22.00),
+(2, 1000, 'AB21', 100, 0.10),
+(1, 1001, 'AB21', 4, 0.10),
+(1, 1002, 'CF02', 100, 210.00),
+(2, 1002, 'ED03', 50, 25.00),
+(1, 1003, 'ED03', 1, 25.00),
+(1, 1004, 'AB21', 5, 0.10),
+(2, 1004, 'AF10', 4, 22.00);
+
+CREATE TABLE ArticleTemp like article;
+
+INSERT INTO ArticleTemp SELECT * FROM article;
+
+SELECT * FROM ArticleTemp;
+
+
+SELECT art_nom, art_code, format(art_prix * 1.10, 3) AS "PrixPlus10%", art_qte FROM ArticleTemp; 
+
+SELECT * FROM commande WHERE com_date substr
 
 
 
